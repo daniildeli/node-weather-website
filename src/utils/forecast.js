@@ -1,7 +1,14 @@
 const request = require('postman-request');
+const yargs = require('yargs');
+
+const WEATHERSTACK_ACCESS_KEY = process.env.WEATHERSTACK_ACCESS_KEY || yargs.argv.WEATHERSTACK_ACCESS_KEY;
+
+if (!WEATHERSTACK_ACCESS_KEY) {
+    throw new Error('Provide the WEATHERSTACK_ACCESS_KEY');
+}
 
 const forecast = (latitude, longtitude, callback) => {
-    const url = `http://api.weatherstack.com/current?access_key=e916a9fe06c31953e92c6f8df7686c47&query=${longtitude},${latitude}`;
+    const url = `http://api.weatherstack.com/current?access_key=${WEATHERSTACK_ACCESS_KEY}&query=${longtitude},${latitude}`;
 
     request(url, { json: true, }, (error, { body, } = {}) => {
         if (error) {
