@@ -23,14 +23,14 @@ app.use(express.static(publicDirectoryPath));
 app.get('', (req, res) => {
     res.render('index', {
         title: 'Weather App',
-        name: 'Danyil'
+        name: 'Danyil',
     });
 });
 
 app.get('/about', (req, res) => {
     res.render('about', {
         title: 'About Me',
-        name: 'Danyil'
+        name: 'Danyil',
     });
 });
 
@@ -38,26 +38,26 @@ app.get('/help', (req, res) => {
     res.render('help', {
         helpText: 'Help text',
         title: 'Help',
-        name: 'Danyil'
+        name: 'Danyil',
     });
 });
 
 app.get('/weather', (req, res) => {
     if (!req.query.address) {
-        return res.send({ error: 'You must provide an address' });
+        return res.send({ error: 'You must provide an address', });
     }
 
-    geocode(req.query.address, (error, { latitude, longtitude, location } = {}) => {
+    geocode(req.query.address, (error, { latitude, longtitude, location, } = {}) => {
         if (error) {
-            return res.send({ error });
+            return res.send({ error, });
         }
-    
+
         forecast(latitude, longtitude, (error, forecast) => {
             if (error) {
-                return res.send({ error });
+                return res.send({ error, });
             }
 
-            res.send({ forecast, location, address: req.query.address });
+            res.send({ forecast, location, address: req.query.address, });
         });
     });
 });
@@ -65,11 +65,11 @@ app.get('/weather', (req, res) => {
 app.get('/products', (req, res) => {
     if (!req.query.search) {
         return res.send({
-            error: 'You must provide a search term'
+            error: 'You must provide a search term',
         });
     }
     res.send({
-        products: []
+        products: [],
     });
 });
 
@@ -77,7 +77,7 @@ app.get('/help/*', (req, res) => {
     res.render('404', {
         title: '404',
         errorMessage: 'Help article not found',
-        name: 'Danyil'
+        name: 'Danyil',
     });
 });
 
@@ -85,7 +85,7 @@ app.get('*', (req, res) => {
     res.render('404', {
         title: '404',
         errorMessage: 'Page not found',
-        name: 'Danyil'
+        name: 'Danyil',
     });
 });
 
