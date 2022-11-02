@@ -1,7 +1,14 @@
 const request = require('postman-request');
+const yargs = require('yargs');
+
+const MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN || yargs.argv.MAPBOX_ACCESS_TOKEN;
+
+if (!MAPBOX_ACCESS_TOKEN) {
+    throw new Error('Provide the MAPBOX_ACCESS_TOKEN');
+}
 
 const geocode = (address, callback) => {
-    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=pk.eyJ1IjoiZGFuaWlsZGVsaSIsImEiOiJjbDF3ZGk3MG4wNHE2M2lwOHl3ZWVyd2pjIn0.Up6981aYiVDxzO9n6LnMUQ&limit=1`;
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${MAPBOX_ACCESS_TOKEN}&limit=1`;
 
     request(url, { json: true, }, (error, { body, }) => {
         if (error) {
